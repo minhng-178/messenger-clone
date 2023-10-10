@@ -9,8 +9,8 @@ import clsx from 'clsx';
 import { find } from 'lodash';
 
 import useConversation from '@/app/hooks/useConversation';
-//import { pusherClient } from '@/app/libs/pusher';
-//import GroupChatModal from '@/app/components/modals/GroupChatModal';
+import { pusherClient } from '@/app/libs/pusher';
+import GroupChatModal from '@/app/components/modals/GroupChatModal';
 import { FullConversationType } from '@/app/types';
 
 import ConversationBox from './ConversationBox';
@@ -42,7 +42,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
       return;
     }
 
-    // pusherClient.subscribe(pusherKey);
+    pusherClient.subscribe(pusherKey);
 
     const updateHandler = (conversation: FullConversationType) => {
       setItems(current =>
@@ -75,18 +75,18 @@ const ConversationList: React.FC<ConversationListProps> = ({
       });
     };
 
-    // pusherClient.bind('conversation:update', updateHandler);
-    // pusherClient.bind('conversation:new', newHandler);
-    // pusherClient.bind('conversation:remove', removeHandler);
+    pusherClient.bind('conversation:update', updateHandler);
+    pusherClient.bind('conversation:new', newHandler);
+    pusherClient.bind('conversation:remove', removeHandler);
   }, [pusherKey, router]);
 
   return (
     <>
-      {/* <GroupChatModal
+      <GroupChatModal
         users={users}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-      /> */}
+      />
       <aside
         className={clsx(
           `
